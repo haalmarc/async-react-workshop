@@ -1,10 +1,15 @@
-import { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate, useSearchParams } from 'react-router';
-import { sessionsQuery } from '../shared/queries';
-import { SessionGrid } from '../shared/SessionGrid';
-import { ErrorMessage } from '../shared/ui';
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useSearchParams } from "react-router";
+import { sessionsQuery } from "../shared/queries";
+import { SessionGrid } from "../shared/SessionGrid";
+import { ErrorMessage } from "../shared/ui";
 
+// 🧠 Om du står fast, finner du fasit i ../solution/router.tsx
+// Men prøv å løse oppgavene selv først.
+// Ta deg tid til å forstå konseptene og lese dokumentasjon.
+// Du får mer ut av fasiten om du har noe å sammenligne med.
+//
 // ✍️ Oppgave 1: Bytt den manuelle pendingDay-livssyklusen med useTransition.
 // Returner/await hele den asynkrone handlingen inne i startTransition.
 // Behold pending-feedback og feilhåndtering. Sett dag i URL-en etter data er klar.
@@ -37,7 +42,7 @@ import { ErrorMessage } from '../shared/ui';
 // 📜 https://react.dev/reference/react/useDeferredValue
 export function Schedule() {
   const [params] = useSearchParams();
-  const day = params.get('day') === '2' ? '2' : '1';
+  const day = params.get("day") === "2" ? "2" : "1";
   const navigate = useNavigate();
   const client = useQueryClient();
   const [pendingDay, setPendingDay] = useState<string | null>(null);
@@ -47,10 +52,12 @@ export function Schedule() {
     setPendingDay(value);
     setError(null);
     try {
-      await client.query({ ...sessionsQuery(value), staleTime: 'static' });
+      await client.query({ ...sessionsQuery(value), staleTime: "static" });
       await navigate(`?day=${value}`);
     } catch (error) {
-      setError(error instanceof Error ? error : new Error('Navigasjonen feilet'));
+      setError(
+        error instanceof Error ? error : new Error("Navigasjonen feilet"),
+      );
     } finally {
       setPendingDay(null);
     }
@@ -58,7 +65,7 @@ export function Schedule() {
   return (
     <>
       <div className="day-picker" aria-label="Konferansedag">
-        {['1', '2'].map((value) => (
+        {["1", "2"].map((value) => (
           <button
             key={value}
             aria-pressed={(pendingDay ?? day) === value}
@@ -68,10 +75,13 @@ export function Schedule() {
             Dag {value}
           </button>
         ))}
-        <span role="status">{pendingDay ? 'Henter program …' : ''}</span>
+        <span role="status">{pendingDay ? "Henter program …" : ""}</span>
       </div>
       {error && <ErrorMessage error={error} />}
-      <div aria-busy={pendingDay !== null} style={{ opacity: pendingDay ? 0.55 : 1 }}>
+      <div
+        aria-busy={pendingDay !== null}
+        style={{ opacity: pendingDay ? 0.55 : 1 }}
+      >
         <SessionGrid day={day} viewTransition={false} />
       </div>
       <Preview />
@@ -82,7 +92,9 @@ function Preview() {
   const [open, setOpen] = useState(false);
   return (
     <section className="preview">
-      <button onClick={() => setOpen(!open)}>{open ? 'Skjul' : 'Vis'} praktisk info</button>
+      <button onClick={() => setOpen(!open)}>
+        {open ? "Skjul" : "Vis"} praktisk info
+      </button>
       {open && (
         <p className="info-card">
           Begge dagene starter kl. 09. Kaffe og gode diskusjoner er inkludert.

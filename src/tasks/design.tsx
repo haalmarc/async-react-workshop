@@ -1,8 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { favoriteQuery } from '../shared/queries';
-import { saveFavorite } from '../shared/api';
-import { ErrorMessage } from '../shared/ui';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { favoriteQuery } from "../shared/queries";
+import { saveFavorite } from "../shared/api";
+import { ErrorMessage } from "../shared/ui";
 
+// 🧠 Om du står fast, finner du fasit i ../solution/design.tsx
+// Men prøv å løse oppgavene selv først.
+// Ta deg tid til å forstå konseptene og lese dokumentasjon.
+// Du får mer ut av fasiten om du har noe å sammenligne med.
+//
 // ✍️ Oppgave 1: Lag en ActionButton i denne filen som tar action: () => Promise<void>.
 // Den bruker useTransition, starter action i startTransition og viser isPending.
 // Bruk knappen her. Behold foreløpig TanStack-mutasjonen (mutateAsync).
@@ -41,12 +46,16 @@ export function FavoriteButton({ id }: { id: string }) {
       return { previous };
     },
     onError: (_error, _favorite, context) => {
-      if (context?.previous) client.setQueryData(favoriteQuery(id).queryKey, context.previous);
+      if (context?.previous)
+        client.setQueryData(favoriteQuery(id).queryKey, context.previous);
     },
     onSuccess: (data) => client.setQueryData(favoriteQuery(id).queryKey, data),
   });
   if (query.isPending) return <p role="status">Henter favoritt …</p>;
-  if (query.isError) return <ErrorMessage error={query.error} retry={() => void query.refetch()} />;
+  if (query.isError)
+    return (
+      <ErrorMessage error={query.error} retry={() => void query.refetch()} />
+    );
   return (
     <div className="favorite-area">
       <button
@@ -55,9 +64,9 @@ export function FavoriteButton({ id }: { id: string }) {
         disabled={mutation.isPending}
         onClick={() => mutation.mutate(!query.data.favorite)}
       >
-        {query.data.favorite ? '♥ Favoritt' : '♡ Legg til favoritt'}
+        {query.data.favorite ? "♥ Favoritt" : "♡ Legg til favoritt"}
       </button>
-      <span role="status">{mutation.isPending ? 'Lagrer …' : ''}</span>
+      <span role="status">{mutation.isPending ? "Lagrer …" : ""}</span>
       {mutation.isError && <ErrorMessage error={mutation.error} />}
     </div>
   );

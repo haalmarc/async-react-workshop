@@ -1,18 +1,29 @@
-# Async React: hva skjer mens vi venter?
+# Workshop i Async React
 
-Du klikker på neste dag eller lagrer en favoritt. Serveren bruker tre sekunder. Hva skal appen vise i mellomtiden — og hvem skal koordinere det?
+I denne workshopen lærer du om **Async React**. Async React er en samlebetegnelse på funksjoner i React som gjør rammeverket bedre i stand til å forstå, koordinere og vise asynkront arbeid – for eksempel datahenting, navigasjon, skjema-innsending og andre operasjoner som tar tid.
 
-Her prøver dere React 18- og 19-funksjoner som Suspense, transitions, Actions og optimistiske oppdateringer. Dere endrer en fungerende konferanseapp og sammenligner med eksplisitt async-håndtering i TanStack Query. Målet er å forstå hva React overtar, og hva dere fortsatt må løse selv.
+Async React erstatter det å manuelt sette loading og error-tilstander. Du bruker heller funksjoner som useOptimistic og Action-mønsteret, Suspense og use(), samt useOptimistic.
+
+Målet for workshopen er å forstå hva Async React er og hvordan du bruker det. Etter workshopen har du forhåpentligvis en følelse av hvordan disse funksjonene og mønstrene føles å bruke versus tradisjonell, eksplisitt setting av tilstander for asynkront arbeid.
+
+## Komme i gang
+
+Workshopen er delt inn i tre deler:
+
+- tasks: oppgaver, hvor du starter fra TanStack Query og React Router med "tradisjonell" kode, og så har oppgaver å skrive deg mot bruk av async React-kode.
+- base: likt som start, så du har noe å sammenligne mot
+- solution: "fasit". Dit du vil jobbe deg mot.
+
+**Tasks** er igjen delt i tre, tilsvarende hvordan du kan dele opp områder for Async React: data, design og router.
+
+Du kan velge hvor du vil begynne.
 
 ## Oppsett før workshopen
-
-Du bør kjenne React-hooks og TanStack Query med `isPending`, `isError` og `data`.
 
 Installer:
 
 - **Node.js 22.22 eller nyere**, gjerne Node 24 LTS.
 - **pnpm 10:** `npm install --global pnpm@10`.
-- En editor og en oppdatert nettleser. Chrome eller Edge anbefales for animasjonsoppgavene.
 
 Kjør i workshopmappen:
 
@@ -38,27 +49,27 @@ For format on save i VS Code/Cursor: installer prosjektets anbefalte [Oxc-utvide
 | `/tasks`    | Fungerende startkode dere endrer          | `src/tasks/`    |
 | `/solution` | Fasit                                     | `src/solution/` |
 
-Navigasjonen øverst bytter variant på samme side. Hovedoppgavenes fasit ligger i filen med samme navn under `src/solution/`. Felles UI og API-funksjoner ligger i `src/shared/`.
+Navigasjonen øverst bytter mellom base, tasks og solution på samme side. Hovedoppgavenes fasit ligger i filen med samme navn under `src/solution/`. Felles UI og API-funksjoner ligger i `src/shared/`.
 
 ### Velg spor
 
-| Spor       | Oppgavefil                         | Innhold                                                              |
-| ---------- | ---------------------------------- | -------------------------------------------------------------------- |
-| **Data**   | [data.tsx](src/tasks/data.tsx)     | Suspense, feilgrenser og kald/varm cache i sesjonsdetaljene          |
-| **Router** | [router.tsx](src/tasks/router.tsx) | Transitions, optimistisk dagvalg og to View Transition-integrasjoner |
-| **Design** | [design.tsx](src/tasks/design.tsx) | Action-prop, pending, optimistiske favoritter og rollback            |
+| Spor       | Oppgavefil                         | Innhold                                                    |
+| ---------- | ---------------------------------- | ---------------------------------------------------------- |
+| **Data**   | [data.tsx](src/tasks/data.tsx)     | Suspense, error boundaries og cache                        |
+| **Router** | [router.tsx](src/tasks/router.tsx) | Transitions, optimistisk oppdatering og View Transition    |
+| **Design** | [design.tsx](src/tasks/design.tsx) | Action-prop, pending, optimistiske oppdatering og rollback |
 
 Routersporet har ferdig Suspense-støtte i programlisten, så det krever ikke at datasporet er løst først. Stegene innenfor hvert spor bygger på hverandre.
 
 **Ekstra:** [Spørsmålsskjema med `useActionState`](src/tasks/questions.tsx) har fasit. Parallelle spørringer og søk med `useDeferredValue` er åpne ekstraoppgaver uten ferdig fasit.
 
-Oppgavene bruker **✍️ kodeendring**, **🧪 utprøving**, **💡 refleksjon**, **📜 dokumentasjon** og **✅ ferdig når**.
+Oppgavene-typene er merket med emoji **✍️ kodeendring**, **🧪 utprøving**, **💡 refleksjon**, **📜 dokumentasjon** og **✅ ferdig når**.
 
-## Simulatoren
+## Debuggings-panel
 
-Panelet nederst lar dere velge **0/1/3 s forsinkelse**, **la neste lagring feile**, **tømme cache** eller **nullstille data**. Engangsfeilen fremprovoserer feil ved favoritter og spørsmål. For å fremprovosere lesefeil, åpne `/tasks/sessions/ukjent`.
+Til hjelp vises et debuggings-panel hvor du kan velge **0/1/3 s forsinkelse**, **la neste lagring feile**, **tømme cache** eller **nullstille data**. Engangsfeilen fremprovoserer feil ved favoritter og spørsmål. For å fremprovosere lesefeil, åpne `/tasks/sessions/ukjent`.
 
-Variantene deler API og serverdata, men har hver sin query-cache. Bruk «Tøm cache» hvis data er gamle eller ventingen uteblir. Nullstilling av data og omstart av serveren fjerner favoritter og spørsmål. Vent til pågående lagring er ferdig før dere nullstiller.
+base, tasks og solutin deler API og serverdata, men har hver sin query-cache. Bruk «Tøm cache» hvis data er gamle eller ventingen uteblir. Nullstilling av data og omstart av serveren fjerner favoritter og spørsmål. Vent til pågående lagring er ferdig før dere nullstiller.
 
 ## Kommandoer
 
@@ -76,6 +87,6 @@ For nettlesertester: stopp `pnpm dev`, kjør `pnpm exec playwright install chrom
 
 ## Inspirasjon og lisens
 
-Inspirert av Aurora Scharffs [Event Hub](https://github.com/aurorascharff/next16-event-hub) og [Designing the in-between states with Async React](https://www.youtube.com/watch?v=QljQDwAwA2Y). Denne workshopen bruker TanStack Query og React Router (til forskjell fra Next.js).
+Workshop-fasiten er av Aurora Scharffs [Event Hub](https://github.com/aurorascharff/next16-event-hub) og [Designing the in-between states with Async React](https://www.youtube.com/watch?v=QljQDwAwA2Y). Denne workshopen bruker TanStack Query og React Router (til forskjell fra Next.js fra videoen).
 
 [MIT-lisens](LICENSE). Bruk og tilpass gjerne! Hvis du holder workshopen eller gjør nyttige justeringer, blir jeg glad for å høre om det — opprett gjerne en issue.
