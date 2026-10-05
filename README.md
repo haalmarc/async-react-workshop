@@ -61,8 +61,6 @@ Navigasjonen øverst bytter mellom base, tasks og solution på samme side. Hoved
 
 Routersporet har ferdig Suspense-støtte i programlisten, så det krever ikke at datasporet er løst først. Stegene innenfor hvert spor bygger på hverandre.
 
-**Ekstra:** [Spørsmålsskjema med `useActionState`](src/tasks/questions.tsx) har fasit. Parallelle spørringer og søk med `useDeferredValue` er åpne ekstraoppgaver uten ferdig fasit.
-
 Oppgavene-typene er merket med emoji **✍️ kodeendring**, **🧪 utprøving**, **💡 refleksjon**, **📜 dokumentasjon** og **✅ ferdig når**.
 
 ## Debuggings-panel

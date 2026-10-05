@@ -4,6 +4,8 @@ import { sessionQuery } from "../shared/queries";
 import { ErrorBoundary, Loading, SessionContent } from "../shared/ui";
 import { FavoriteButton } from "./design";
 
+// Fasit for ekstraoppgave 4a og 4b finnes i ./data.extra4.tsx.
+
 export function SessionPage({ id }: { id: string }) {
   return (
     <QueryErrorResetBoundary>
