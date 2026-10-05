@@ -6,6 +6,38 @@ test.beforeEach(async ({ request }) => {
 });
 
 for (const variant of ["base", "tasks", "solution"]) {
+  test(`${variant}: ukjent sesjon viser én feil uten å hente favorittstatus`, async ({ page }) => {
+    const favoriteRequests: string[] = [];
+    page.on("request", (request) => {
+      if (request.url().endsWith("/api/sessions/ukjent/favorite")) {
+        favoriteRequests.push(request.url());
+      }
+    });
+    await page.goto(`/${variant}/sessions/ukjent`);
+    await expect(page.getByRole("alert")).toHaveCount(1);
+    await expect(page.getByRole("alert")).toContainText("Sesjonen finnes ikke");
+    await expect(page.getByRole("button", { name: /Legg til favoritt|♥ Favoritt/ })).toHaveCount(0);
+    await page.getByRole("button", { name: "Prøv igjen", exact: true }).click();
+    await expect(page.getByRole("alert")).toContainText("Sesjonen finnes ikke");
+    expect(favoriteRequests).toEqual([]);
+    await page.getByRole("link", { name: "← Til programmet", exact: true }).click();
+    await expect(page.getByRole("link", { name: /Det som skjer mens vi venter/ })).toBeVisible();
+  });
+
+  test(`${variant}: feil i favorittstatus beholder sesjonsdetaljene`, async ({ page }) => {
+    await page.route("**/api/sessions/cache/favorite", (route) =>
+      route.fulfill({
+        status: 503,
+        contentType: "application/json",
+        body: JSON.stringify({ message: "Favorittstatus kunne ikke hentes" }),
+      }),
+    );
+    await page.goto(`/${variant}/sessions/cache`);
+    await expect(page.getByRole("heading", { name: "Cache er også et produktvalg" })).toBeVisible();
+    await expect(page.getByRole("alert")).toHaveCount(1);
+    await expect(page.getByRole("alert")).toContainText("Favorittstatus kunne ikke hentes");
+  });
+
   test(`${variant}: dagbytte, favorittsuksess og rollback ved feil`, async ({ page, request }) => {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));

@@ -3,7 +3,7 @@ import { QueryErrorResetBoundary, useSuspenseQuery } from "@tanstack/react-query
 import { sessionsQuery } from "./queries";
 import { ErrorBoundary, Loading, SessionCard } from "./ui";
 
-// Ferdig datastøtte for routersporet. Datasporet endrer sesjonsdetaljene i stedet.
+// Ferdig datastøtte for routersporet. Datasporet endrer sesjonssiden i stedet.
 export function SessionGrid({
   day,
   viewTransition = false,

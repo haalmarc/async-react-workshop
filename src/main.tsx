@@ -115,14 +115,13 @@ function Layout({ variant }: { variant: Variant }) {
 }
 function Detail({ variant }: { variant: Variant }) {
   const { id = "" } = useParams();
-  const { SessionDetails, FavoriteButton } = variants[variant];
+  const { SessionPage } = variants[variant];
   return (
     <>
       <Link className="back-link" to={`/${variant}`} viewTransition={variant !== "base"}>
         ← Til programmet
       </Link>
-      <SessionDetails key={id} id={id} />
-      <FavoriteButton key={id} id={id} />
+      <SessionPage key={id} id={id} />
     </>
   );
 }
