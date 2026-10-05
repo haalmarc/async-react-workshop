@@ -2,7 +2,7 @@
 
 I denne workshopen lærer du om **Async React**. Async React er en samlebetegnelse på funksjoner i React som gjør rammeverket bedre i stand til å forstå, koordinere og vise asynkront arbeid – for eksempel datahenting, navigasjon, skjema-innsending og andre operasjoner som tar tid.
 
-Async React erstatter det å manuelt sette loading og error-tilstander. Du bruker heller funksjoner som useOptimistic og Action-mønsteret, Suspense og use(), samt useOptimistic.
+Async React kan koordinere venting og optimistisk visning med `useTransition`, `useOptimistic`, Action-mønsteret og Suspense. Lagringsfeil og oppdatering av serverdata må fortsatt håndteres.
 
 Målet for workshopen er å forstå hva Async React er og hvordan du bruker det. Etter workshopen har du forhåpentligvis en følelse av hvordan disse funksjonene og mønstrene føles å bruke versus tradisjonell, eksplisitt setting av tilstander for asynkront arbeid.
 
@@ -11,7 +11,7 @@ Målet for workshopen er å forstå hva Async React er og hvordan du bruker det.
 Workshopen er delt inn i tre deler:
 
 - tasks: oppgaver, hvor du starter fra TanStack Query og React Router med "tradisjonell" kode, og så har oppgaver å skrive deg mot bruk av async React-kode.
-- base: likt som start, så du har noe å sammenligne mot
+- base: en ferdig referanseløsning med TanStack Query, så du har noe å sammenligne mot
 - solution: "fasit". Dit du vil jobbe deg mot.
 
 **Tasks** er igjen delt i tre, tilsvarende hvordan du kan dele opp områder for Async React: data, design og router.
@@ -53,13 +53,15 @@ Navigasjonen øverst bytter mellom base, tasks og solution på samme side. Hoved
 
 ### Velg spor
 
-| Spor       | Oppgavefil                         | Innhold                                                    |
-| ---------- | ---------------------------------- | ---------------------------------------------------------- |
-| **Data**   | [data.tsx](src/tasks/data.tsx)     | Suspense, error boundaries og cache                        |
-| **Router** | [router.tsx](src/tasks/router.tsx) | Transitions, optimistisk oppdatering og View Transition    |
-| **Design** | [design.tsx](src/tasks/design.tsx) | Action-prop, pending, optimistiske oppdatering og rollback |
+| Spor       | Oppgavefil                         | Innhold                                                 |
+| ---------- | ---------------------------------- | ------------------------------------------------------- |
+| **Data**   | [data.tsx](src/tasks/data.tsx)     | Suspense, error boundaries og cache                     |
+| **Router** | [router.tsx](src/tasks/router.tsx) | Transitions, optimistisk oppdatering og View Transition |
+| **Design** | [design.tsx](src/tasks/design.tsx) | Action-prop, pending og lokal optimisme                 |
 
 Routersporet har ferdig Suspense-støtte i programlisten, så det krever ikke at datasporet er løst først. Stegene innenfor hvert spor bygger på hverandre.
+
+For designsporet: åpne en sesjon under Oppgaver og test favorittknappen med forsinkelse og feilet lagring i debug-panelet. Bytt til Referanse eller Fasit i navigasjonen for å sammenligne.
 
 Oppgavene-typene er merket med emoji **✍️ kodeendring**, **🧪 utprøving**, **💡 refleksjon**, **📜 dokumentasjon** og **✅ ferdig når**.
 

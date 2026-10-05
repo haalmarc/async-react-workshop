@@ -51,18 +51,67 @@ for (const variant of ["base", "tasks", "solution"]) {
     await expect(favorite).toHaveAttribute("aria-pressed", "false");
     await request.patch("/api/simulator", { data: { delayMs: 1000 } });
     await favorite.click();
+    await expect(favorite).toHaveAttribute("aria-pressed", variant === "tasks" ? "false" : "true");
+    if (variant === "tasks") {
+      await expect(page.getByText("Lagrer …", { exact: true })).toHaveCount(0);
+      await expect(favorite).toBeEnabled();
+    } else {
+      await expect(page.getByText("Lagrer …", { exact: true })).toBeVisible();
+      await expect(favorite).toBeDisabled();
+      await expect(favorite).toBeEnabled();
+    }
     await expect(favorite).toHaveAttribute("aria-pressed", "true");
-    await expect(page.getByText("Lagrer …", { exact: true })).toBeVisible();
-    await expect(favorite).toBeEnabled();
     await page.getByRole("button", { name: "La neste lagring feile" }).click();
     await expect(page.getByRole("button", { name: /Neste lagring vil feile/ })).toBeVisible();
     await favorite.click();
-    await expect(favorite).toHaveAttribute("aria-pressed", "false");
+    await expect(favorite).toHaveAttribute("aria-pressed", variant === "tasks" ? "true" : "false");
     await expect(page.getByRole("alert")).toContainText("Simulert feil");
     await expect(favorite).toHaveAttribute("aria-pressed", "true");
     expect(errors).toEqual([]);
   });
 }
+
+test("tasks: direkte PUT viser bekreftet verdi og håndterer lagringsfeil", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/tasks/sessions/cache");
+  const favorite = page.getByRole("button", { name: /Legg til favoritt|♥ Favoritt/ });
+  await expect(favorite).toHaveAttribute("aria-pressed", "false");
+  await request.patch("/api/simulator", { data: { delayMs: 1000 } });
+  await favorite.click();
+  await expect(favorite).toBeEnabled();
+  await expect(favorite).toHaveAttribute("aria-pressed", "false");
+  await expect(favorite).toHaveAttribute("aria-pressed", "true");
+  await request.patch("/api/simulator", { data: { failNextSave: true } });
+  await favorite.click();
+  await expect(page.getByRole("alert")).toContainText("Simulert feil");
+  await expect(favorite).toHaveAttribute("aria-pressed", "true");
+});
+
+test("solution: React Actions viser pending, lokal optimisme og rollback", async ({
+  page,
+  request,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/solution/sessions/cache");
+  const favorite = page.getByRole("button", { name: /Legg til favoritt|♥ Favoritt/ });
+  await expect(favorite).toHaveAttribute("aria-pressed", "false");
+  await request.patch("/api/simulator", { data: { delayMs: 1000 } });
+  await favorite.click();
+  await expect(favorite).toHaveAttribute("aria-pressed", "true");
+  await expect(favorite).toBeDisabled();
+  await expect(page.getByText("Lagrer …", { exact: true })).toBeVisible();
+  await expect(favorite).toBeEnabled();
+  await expect(favorite).toHaveAttribute("aria-pressed", "true");
+  await request.patch("/api/simulator", { data: { failNextSave: true } });
+  await favorite.click();
+  await expect(favorite).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("alert")).toContainText("Simulert feil");
+  await expect(favorite).toHaveAttribute("aria-pressed", "true");
+  expect(errors).toEqual([]);
+});
 
 test("solution: pending omfatter datahenting, og lokal React ViewTransition virker", async ({
   page,

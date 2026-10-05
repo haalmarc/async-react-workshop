@@ -1,7 +1,29 @@
+import type { ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { favoriteQuery } from "../shared/queries";
 import { saveFavorite } from "../shared/api";
 import { ErrorMessage } from "../shared/ui";
+
+export function FavoriteToggle({
+  onClick,
+  pending,
+  pressed,
+  children,
+}: {
+  onClick: () => void;
+  pending: boolean;
+  pressed: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <>
+      <button className="favorite" aria-pressed={pressed} disabled={pending} onClick={onClick}>
+        {children}
+      </button>
+      <span role="status">{pending ? "Lagrer …" : ""}</span>
+    </>
+  );
+}
 
 export function FavoriteButton({ id }: { id: string }) {
   const client = useQueryClient();
@@ -24,15 +46,13 @@ export function FavoriteButton({ id }: { id: string }) {
     return <ErrorMessage error={query.error} onReset={() => void query.refetch()} />;
   return (
     <div className="favorite-area">
-      <button
-        className="favorite"
-        aria-pressed={query.data.favorite}
-        disabled={mutation.isPending}
+      <FavoriteToggle
+        pressed={query.data.favorite}
+        pending={mutation.isPending}
         onClick={() => mutation.mutate(!query.data.favorite)}
       >
         {query.data.favorite ? "♥ Favoritt" : "♡ Legg til favoritt"}
-      </button>
-      <span role="status">{mutation.isPending ? "Lagrer …" : ""}</span>
+      </FavoriteToggle>
       {mutation.isError && <ErrorMessage error={mutation.error} />}
     </div>
   );
