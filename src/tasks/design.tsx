@@ -46,16 +46,13 @@ export function FavoriteButton({ id }: { id: string }) {
       return { previous };
     },
     onError: (_error, _favorite, context) => {
-      if (context?.previous)
-        client.setQueryData(favoriteQuery(id).queryKey, context.previous);
+      if (context?.previous) client.setQueryData(favoriteQuery(id).queryKey, context.previous);
     },
     onSuccess: (data) => client.setQueryData(favoriteQuery(id).queryKey, data),
   });
   if (query.isPending) return <p role="status">Henter favoritt …</p>;
   if (query.isError)
-    return (
-      <ErrorMessage error={query.error} retry={() => void query.refetch()} />
-    );
+    return <ErrorMessage error={query.error} onReset={() => void query.refetch()} />;
   return (
     <div className="favorite-area">
       <button

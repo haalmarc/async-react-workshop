@@ -1,5 +1,5 @@
 :root {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: "DM Sans", system-ui, sans-serif;
   color: #152d2a;
   background: #f7f6ef;
   font-synthesis: none;
@@ -51,7 +51,7 @@ textarea:focus-visible {
 h1,
 h2,
 h3 {
-  font-family: 'Manrope', system-ui, sans-serif;
+  font-family: "Manrope", system-ui, sans-serif;
   letter-spacing: -0.045em;
 }
 h1 {
@@ -158,7 +158,7 @@ nav a[aria-current] {
   margin: 1.5rem 0;
   flex-wrap: wrap;
 }
-.day-picker button[aria-pressed='true'] {
+.day-picker button[aria-pressed="true"] {
   background: #152d2a;
   color: #fffef8;
 }
@@ -249,7 +249,7 @@ nav a[aria-current] {
   align-items: center;
   margin-top: 1.5rem;
 }
-.favorite[aria-pressed='true'] {
+.favorite[aria-pressed="true"] {
   background: #f6ded0;
   border-color: #c89073;
 }
@@ -315,7 +315,7 @@ nav a[aria-current] {
   color: #152d2a;
   background: #fff;
 }
-.simulator button[aria-pressed='true'] {
+.simulator button[aria-pressed="true"] {
   background: #f6ded0;
   color: #152d2a;
 }

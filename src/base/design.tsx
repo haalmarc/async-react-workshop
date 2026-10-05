@@ -1,7 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { favoriteQuery } from '../shared/queries';
-import { saveFavorite } from '../shared/api';
-import { ErrorMessage } from '../shared/ui';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { favoriteQuery } from "../shared/queries";
+import { saveFavorite } from "../shared/api";
+import { ErrorMessage } from "../shared/ui";
 
 export function FavoriteButton({ id }: { id: string }) {
   const client = useQueryClient();
@@ -20,7 +20,8 @@ export function FavoriteButton({ id }: { id: string }) {
     onSuccess: (data) => client.setQueryData(favoriteQuery(id).queryKey, data),
   });
   if (query.isPending) return <p role="status">Henter favoritt …</p>;
-  if (query.isError) return <ErrorMessage error={query.error} retry={() => void query.refetch()} />;
+  if (query.isError)
+    return <ErrorMessage error={query.error} onReset={() => void query.refetch()} />;
   return (
     <div className="favorite-area">
       <button
@@ -29,9 +30,9 @@ export function FavoriteButton({ id }: { id: string }) {
         disabled={mutation.isPending}
         onClick={() => mutation.mutate(!query.data.favorite)}
       >
-        {query.data.favorite ? '♥ Favoritt' : '♡ Legg til favoritt'}
+        {query.data.favorite ? "♥ Favoritt" : "♡ Legg til favoritt"}
       </button>
-      <span role="status">{mutation.isPending ? 'Lagrer …' : ''}</span>
+      <span role="status">{mutation.isPending ? "Lagrer …" : ""}</span>
       {mutation.isError && <ErrorMessage error={mutation.error} />}
     </div>
   );

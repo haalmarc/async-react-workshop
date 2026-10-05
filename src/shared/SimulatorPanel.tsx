@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
-import { api, type Simulator } from './api';
-import { clients } from './queries';
+import { useEffect, useState } from "react";
+import { api, type Simulator } from "./api";
+import { clients } from "./queries";
 
 export function SimulatorPanel() {
   const [settings, setSettings] = useState<Simulator | null>(null);
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   useEffect(() => {
     let active = true;
     async function refresh() {
       try {
-        const data = await api<Simulator>('/simulator');
+        const data = await api<Simulator>("/simulator");
         if (active) setSettings(data);
       } catch {
-        if (active) setMessage('API-serveren svarer ikke. Start med pnpm dev.');
+        if (active) setMessage("API-serveren svarer ikke. Start med pnpm dev.");
       }
     }
     void refresh();
@@ -27,11 +27,11 @@ export function SimulatorPanel() {
     setBusy(true);
     try {
       setSettings(
-        await api<Simulator>('/simulator', { method: 'PATCH', body: JSON.stringify(patch) }),
+        await api<Simulator>("/simulator", { method: "PATCH", body: JSON.stringify(patch) }),
       );
-      setMessage('Simulatoren er oppdatert.');
+      setMessage("Simulatoren er oppdatert.");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Feil');
+      setMessage(error instanceof Error ? error.message : "Feil");
     } finally {
       setBusy(false);
     }
@@ -46,7 +46,7 @@ export function SimulatorPanel() {
           await cache.resetQueries();
         }),
       );
-      setMessage('Cache tømt i alle variantene. Aktive data lastes på nytt.');
+      setMessage("Cache tømt i alle variantene. Aktive data lastes på nytt.");
     } finally {
       setBusy(false);
     }
@@ -54,11 +54,11 @@ export function SimulatorPanel() {
   async function reset() {
     setBusy(true);
     try {
-      await api('/reset', { method: 'POST' });
+      await api("/reset", { method: "POST" });
       await clearCache();
-      setMessage('Eksempeldata tilbakestilt.');
+      setMessage("Eksempeldata tilbakestilt.");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Feil');
+      setMessage(error instanceof Error ? error.message : "Feil");
     } finally {
       setBusy(false);
     }
@@ -68,7 +68,7 @@ export function SimulatorPanel() {
       <div className="simulator-controls">
         <strong>Test ventingen</strong>
         <label>
-          API-forsinkelse{' '}
+          API-forsinkelse{" "}
           <select
             aria-label="API-forsinkelse"
             disabled={busy || !settings}
@@ -85,7 +85,7 @@ export function SimulatorPanel() {
           aria-pressed={settings?.failNextSave ?? false}
           onClick={() => void update({ failNextSave: !settings?.failNextSave })}
         >
-          {settings?.failNextSave ? 'Neste lagring vil feile ✓' : 'La neste lagring feile'}
+          {settings?.failNextSave ? "Neste lagring vil feile ✓" : "La neste lagring feile"}
         </button>
         <button disabled={busy} onClick={() => void clearCache()}>
           Tøm cache
@@ -95,7 +95,7 @@ export function SimulatorPanel() {
         </button>
       </div>
       <p role="status">
-        {message || 'Forsinkelse gjelder nye API-kall. Cache kan gjøre et nytt besøk umiddelbart.'}
+        {message || "Forsinkelse gjelder nye API-kall. Cache kan gjøre et nytt besøk umiddelbart."}
       </p>
     </aside>
   );

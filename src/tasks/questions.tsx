@@ -7,4 +7,4 @@
 // 📜 https://react.dev/reference/react/useActionState
 // 💡 Refleksjon: React Actions er ikke det samme som Next.js Server Actions.
 // Hvor kjører denne handlingen, og hvor validerer vi data?
-export { Questions } from '../base/questions';
+export { Questions } from "../base/questions";

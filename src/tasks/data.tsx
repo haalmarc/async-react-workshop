@@ -9,24 +9,32 @@ import { ErrorMessage, Loading, SessionContent } from "../shared/ui";
 //
 // ✍️ Oppgave 1: Bytt useQuery med useSuspenseQuery. Fjern isPending-grenen.
 // Legg Suspense med Loading-fallback rundt komponenten som leser data.
-// Hint: Del denne komponenten i en ytre SessionDetails og en indre DetailsContent.
-// ✅ Ferdig når: Kald cache viser fallback, deretter detaljer uten en lokal isPending-gren.
+// Hint:
+// - Del denne komponenten i en ytre SessionDetails og en indre DetailsContent.
+// - Du kan kommentere ut error-håndtering foreløpig, siden du fikser det i neste oppgave.
+// ✅ Ferdig når: Viser fallback ved første navigering til en session (ucachet), deretter vil navigering være umiddelbar (cachet).
 // 📜 https://tanstack.com/query/latest/docs/framework/react/guides/suspense
 // 📜 https://react.dev/reference/react/Suspense
-// 💡 Refleksjon: Hva gjør egentlig Suspense?
-// 💡 Refleksjon: Hvorfor dele komponenten i to?
+// 💡 Refleksjon:
+// - Hva gjør egentlig Suspense?
+// - Hvorfor dele komponenten i to?
+// - Hva trengs for at Suspense skal fungere?
 //
-// ✍️ Oppgave 2: Flytt feilvisningen til ErrorBoundary + QueryErrorResetBoundary.
-// Se src/solution/data.tsx om du trenger hjelp med retry-kontrakten.
+// ✍️ Oppgave 2: Bruk ErrorBoundary og QueryErrorResetBoundary ved feil.
+// Hint: Du finner ErrorBoundary-komponent i ../shared/ui og QueryErrorResetBoundary fra @tanstack/react-query.
 // ✅ Ferdig når: /tasks/sessions/ukjent viser feil med errorboundary, med en fungerende retry-knapp.
 // Retry gjør et nytt API-kall; en ukjent sesjon skal fortsatt feile.
-// 📜 https://tanstack.com/query/latest/docs/framework/react/reference/QueryErrorResetBoundary
+// 📜 https://tanstack.com/query/latest/docs/framework/react/guides/suspense#resetting-error-boundaries
+// 💡 Refleksjon:
+// - Hva er forskjellen på ErrorBoundary og QueryErrorResetBoundary?
+// - Er det noen ganger du ikke ønsker å ha med retry-knappen?
 //
 // 🧪 Oppgave 3: Velg 3 s, trykk «Tøm cache», og åpne en sesjon.
 // Besøk den igjen uten å tømme cache. Når ser du fallback?
 // ✅ Ferdig når: Du har sett fallback med kald cache og umiddelbare detaljer med varm cache.
-// 💡 Refleksjon: Hvem eier loading nå? Forsvant tilstanden, eller flyttet den seg?
-// 💡 Refleksjon: Hva ville vært annerledes med en async Server Component i Next.js?
+// 💡 Refleksjon:
+// - Hvem eier loading nå? Forsvant tilstanden, eller flyttet den seg?
+// - Hva ville vært annerledes med en async Server Component i Next.js?
 //
 // ✍️ Oppgave 4 (ekstra): Hent to uavhengige datakilder. Sammenlign to useSuspenseQuery
 // Åpen ekstraoppgave uten ferdig fasit.

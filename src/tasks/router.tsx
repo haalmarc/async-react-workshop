@@ -55,9 +55,7 @@ export function Schedule() {
       await client.query({ ...sessionsQuery(value), staleTime: "static" });
       await navigate(`?day=${value}`);
     } catch (error) {
-      setError(
-        error instanceof Error ? error : new Error("Navigasjonen feilet"),
-      );
+      setError(error instanceof Error ? error : new Error("Navigasjonen feilet"));
     } finally {
       setPendingDay(null);
     }
@@ -78,10 +76,7 @@ export function Schedule() {
         <span role="status">{pendingDay ? "Henter program …" : ""}</span>
       </div>
       {error && <ErrorMessage error={error} />}
-      <div
-        aria-busy={pendingDay !== null}
-        style={{ opacity: pendingDay ? 0.55 : 1 }}
-      >
+      <div aria-busy={pendingDay !== null} style={{ opacity: pendingDay ? 0.55 : 1 }}>
         <SessionGrid day={day} viewTransition={false} />
       </div>
       <Preview />
@@ -92,9 +87,7 @@ function Preview() {
   const [open, setOpen] = useState(false);
   return (
     <section className="preview">
-      <button onClick={() => setOpen(!open)}>
-        {open ? "Skjul" : "Vis"} praktisk info
-      </button>
+      <button onClick={() => setOpen(!open)}>{open ? "Skjul" : "Vis"} praktisk info</button>
       {open && (
         <p className="info-card">
           Begge dagene starter kl. 09. Kaffe og gode diskusjoner er inkludert.

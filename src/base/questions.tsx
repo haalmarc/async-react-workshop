@@ -1,17 +1,17 @@
-import { useState, type FormEvent } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createQuestion } from '../shared/api';
-import { questionsQuery } from '../shared/queries';
-import { ErrorMessage, Loading } from '../shared/ui';
+import { useState, type FormEvent } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createQuestion } from "../shared/api";
+import { questionsQuery } from "../shared/queries";
+import { ErrorMessage, Loading } from "../shared/ui";
 
 export function Questions() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const client = useQueryClient();
   const query = useQuery(questionsQuery());
   const mutation = useMutation({
     mutationFn: createQuestion,
     onSuccess: async () => {
-      setText('');
+      setText("");
       await client.invalidateQueries(questionsQuery());
     },
   });
@@ -34,7 +34,7 @@ export function Questions() {
           required
         />
         <button disabled={mutation.isPending}>
-          {mutation.isPending ? 'Sender …' : 'Send spørsmål'}
+          {mutation.isPending ? "Sender …" : "Send spørsmål"}
         </button>
         {mutation.isError && <ErrorMessage error={mutation.error} />}
         {mutation.isSuccess && <p role="status">Spørsmålet er sendt.</p>}
@@ -42,7 +42,7 @@ export function Questions() {
       {query.isPending ? (
         <Loading label="Henter spørsmål …" />
       ) : query.isError ? (
-        <ErrorMessage error={query.error} retry={() => void query.refetch()} />
+        <ErrorMessage error={query.error} onReset={() => void query.refetch()} />
       ) : (
         <ul>
           {query.data.map((question) => (

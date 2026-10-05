@@ -1,25 +1,25 @@
-import { useActionState, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { createQuestion } from '../shared/api';
-import { questionsQuery } from '../shared/queries';
-import { ErrorMessage, Loading } from '../shared/ui';
+import { useActionState, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { createQuestion } from "../shared/api";
+import { questionsQuery } from "../shared/queries";
+import { ErrorMessage, Loading } from "../shared/ui";
 
 type Result = { error: string | null; success: boolean };
 const initialState: Result = { error: null, success: false };
 export function Questions() {
   const client = useQueryClient();
   const query = useQuery(questionsQuery());
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [result, submitAction, isPending] = useActionState(
     async (_previous: Result, data: FormData): Promise<Result> => {
       try {
-        await createQuestion(String(data.get('text') ?? ''));
+        await createQuestion(String(data.get("text") ?? ""));
         await client.invalidateQueries(questionsQuery());
-        setText('');
+        setText("");
         return { error: null, success: true };
       } catch (error) {
         return {
-          error: error instanceof Error ? error.message : 'Innsendingen feilet',
+          error: error instanceof Error ? error.message : "Innsendingen feilet",
           success: false,
         };
       }
@@ -41,7 +41,7 @@ export function Questions() {
           maxLength={500}
           required
         />
-        <button disabled={isPending}>{isPending ? 'Sender …' : 'Send spørsmål'}</button>
+        <button disabled={isPending}>{isPending ? "Sender …" : "Send spørsmål"}</button>
         {result.error && (
           <p className="error" role="alert">
             {result.error}
@@ -52,7 +52,7 @@ export function Questions() {
       {query.isPending ? (
         <Loading label="Henter spørsmål …" />
       ) : query.isError ? (
-        <ErrorMessage error={query.error} retry={() => void query.refetch()} />
+        <ErrorMessage error={query.error} onReset={() => void query.refetch()} />
       ) : (
         <ul>
           {query.data.map((question) => (

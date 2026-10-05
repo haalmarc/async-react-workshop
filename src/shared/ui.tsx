@@ -1,8 +1,8 @@
-import { Component, type ReactNode } from 'react';
-import { Link } from 'react-router';
-import type { Session } from './api';
+import { Component, type ReactNode } from "react";
+import { Link } from "react-router";
+import type { Session } from "./api";
 
-export function Loading({ label = 'Henter sesjoner …' }: { label?: string }) {
+export function Loading({ label = "Henter sesjoner …" }: { label?: string }) {
   return (
     <div className="loading" role="status">
       <div className="skeleton" />
@@ -11,16 +11,16 @@ export function Loading({ label = 'Henter sesjoner …' }: { label?: string }) {
     </div>
   );
 }
-export function ErrorMessage({ error, retry }: { error: Error; retry?: () => void }) {
+export function ErrorMessage({ error, onReset }: { error: Error; onReset?: () => void }) {
   return (
     <div className="error" role="alert">
       <p>{error.message}</p>
-      {retry && <button onClick={retry}>Prøv igjen</button>}
+      {onReset && <button onClick={onReset}>Prøv igjen</button>}
     </div>
   );
 }
 export class ErrorBoundary extends Component<
-  { children: ReactNode; reset: () => void },
+  { children: ReactNode; onReset: () => void },
   { error: Error | null }
 > {
   state = { error: null as Error | null };
@@ -31,8 +31,8 @@ export class ErrorBoundary extends Component<
     return this.state.error ? (
       <ErrorMessage
         error={this.state.error}
-        retry={() => {
-          this.props.reset();
+        onReset={() => {
+          this.props.onReset();
           this.setState({ error: null });
         }}
       />
