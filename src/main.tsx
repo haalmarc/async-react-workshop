@@ -23,7 +23,8 @@ import "./styles.css";
 const variants = {
   base: {
     label: "Referanse",
-    note: "Eksplisitt async-state med TanStack Query",
+    heading: "TanStack Query",
+    note: "Her håndterer vi lasting og feil med TanStack Query.",
     ...baseRouter,
     ...baseData,
     ...baseDesign,
@@ -31,7 +32,8 @@ const variants = {
   },
   tasks: {
     label: "Oppgaver",
-    note: "Din kode · velg data, router eller design",
+    heading: "Prøv selv",
+    note: "Åpne src/tasks/ og velg mellom data, router og design.",
     ...taskRouter,
     ...taskData,
     ...taskDesign,
@@ -39,7 +41,8 @@ const variants = {
   },
   solution: {
     label: "Fasit",
-    note: "Suspense, transitions og Actions i samspill",
+    heading: "Suspense, transitions og Actions",
+    note: "Her kan du se hvordan oppgavene er løst.",
     ...solutionRouter,
     ...solutionData,
     ...solutionDesign,
@@ -51,12 +54,10 @@ function Home() {
   return (
     <main className="home">
       <span className="eyebrow">React 18 + 19 · Praktisk workshop</span>
-      <h1>
-        Hva skjer
-        <br />
-        mens vi venter?
-      </h1>
-      <p className="lead">Samme app. Samme API. Tre måter å utforske async-flyter på.</p>
+      <h1>Async React</h1>
+      <p className="lead">
+        Her kan du prøve appen, jobbe med oppgavene og sammenligne med fasiten.
+      </p>
       <div className="variant-cards">
         {(Object.keys(variants) as Variant[]).map((variant) => (
           <Link key={variant} to={`/${variant}`}>
@@ -83,7 +84,7 @@ function Layout({ variant }: { variant: Variant }) {
     <QueryClientProvider client={clients[variant]}>
       <header className="app-header">
         <Link to="/" className="brand">
-          mellomrom<span>event hub / async react</span>
+          mellomrom<span>Workshop · Async React</span>
         </Link>
         <nav aria-label="Appvariant">
           {(Object.keys(variants) as Variant[]).map((value) => (
@@ -99,11 +100,10 @@ function Layout({ variant }: { variant: Variant }) {
       </header>
       <main className="app-main">
         <div className="page-heading">
-          <span className="eyebrow">En liten konferanse om store mellomtilstander</span>
+          <span className="eyebrow">Workshop · Async React</span>
           <h1>
-            To dager.
-            <br />
-            Mange gode spørsmål.
+            {variants[variant].label}
+            <span className="variant-heading">{variants[variant].heading}</span>
           </h1>
           <p>{variants[variant].note}</p>
         </div>
@@ -137,6 +137,15 @@ const router = createBrowserRouter([
           index: true,
           element: (
             <>
+              <aside className="workshop-tip" aria-labelledby="workshop-tip-heading">
+                <h2 id="workshop-tip-heading">Prøv appen</h2>
+                <p>
+                  Klikk rundt og legg foredrag til som favoritter. Bytt mellom referansen, din
+                  løsning i oppgavefanen og fasiten. Hva føles annerledes når du bytter dag eller
+                  lagrer en favoritt?
+                </p>
+                <p>Skru opp API-forsinkelsen nederst for å se hva som skjer mens du venter.</p>
+              </aside>
               <Schedule />
               <Link className="stretch-link" to="questions">
                 Ekstra: spørsmålsskjema →

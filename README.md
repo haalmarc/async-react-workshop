@@ -87,6 +87,6 @@ For nettlesertester: stopp `pnpm dev`, kjør `pnpm exec playwright install chrom
 
 ## Inspirasjon og lisens
 
-Workshop-fasiten er av Aurora Scharffs [Event Hub](https://github.com/aurorascharff/next16-event-hub) og [Designing the in-between states with Async React](https://www.youtube.com/watch?v=QljQDwAwA2Y). Denne workshopen bruker TanStack Query og React Router (til forskjell fra Next.js fra videoen).
+Workshop-fasiten er inspirert av Aurora Scharffs [Event Hub](https://github.com/aurorascharff/next16-event-hub) som viser frem Async React i Next.js og presentasjonen [Designing the in-between states with Async React](https://www.youtube.com/watch?v=QljQDwAwA2Y) som beskriver hva async react er og hvordan bruke API-ene. Denne workshopen bruker TanStack Query og React Router.
 
 [MIT-lisens](LICENSE). Bruk og tilpass gjerne! Hvis du holder workshopen eller gjør nyttige justeringer, blir jeg glad for å høre om det — opprett gjerne en issue.

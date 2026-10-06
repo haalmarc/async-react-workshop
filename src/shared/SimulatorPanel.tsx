@@ -95,7 +95,7 @@ export function SimulatorPanel() {
         </button>
       </div>
       <p role="status">
-        {message || "Forsinkelse gjelder nye API-kall. Cache kan gjøre et nytt besøk umiddelbart."}
+        {message || "Forsinkelsen gjelder nye API-kall. Data i cache vises uten å vente."}
       </p>
     </aside>
   );
