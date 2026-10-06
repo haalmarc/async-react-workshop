@@ -9,30 +9,33 @@ import { ErrorMessage } from "../shared/ui";
 // Men prøv å løse oppgavene selv først.
 // Ta deg tid til å forstå konseptene og lese dokumentasjon.
 // Du får mer ut av fasiten om du har noe å sammenligne med.
-//
+
 // ✍️ Oppgave 1: Bytt den manuelle pendingDay-livssyklusen med useTransition.
 // Returner/await hele den asynkrone handlingen inne i startTransition.
 // Behold pending-feedback og feilhåndtering. Sett dag i URL-en etter data er klar.
 // ✅ Ferdig når: Ved 3 s og kald cache vises pending og gammelt program til nytt er klart.
 // 📜 https://react.dev/reference/react/useTransition
+
 // ✍️ Oppgave 2: Bruk useOptimistic(day) for å markere valgt dag umiddelbart.
 // Oppdater den bare inne i Action. Prøv kald cache og 3 s forsinkelse.
 // ✅ Ferdig når: Valgt dag markeres straks, mens URL og program skifter etter lasting.
-// 💡 Refleksjon: Hva oppdateres straks, og hva venter? Er en transition en animasjon?
 //
+// 💡 Refleksjon: Hva oppdateres straks, og hva venter? Er en transition en animasjon?
+
 // ✍️ Oppgave 3: Sett viewTransition på SessionGrid under. Den sender verdien til Link.
 // Åpne en sesjon og gå tilbake. Dette er React Routers nettleser-integrasjon.
 // ✅ Ferdig når: Navigasjon til sesjon og tilbake har en synlig overgang i støttet nettleser.
 // 📜 https://reactrouter.com/how-to/view-transitions
-//
+
 // ✍️ Oppgave 4: Pakk den lokale info-boksen i Preview med React <ViewTransition>.
 // Legg setOpen i startTransition. Ingen navigasjon er nødvendig her.
 // Ferdig CSS tar hensyn til prefers-reduced-motion.
 // ✅ Ferdig når: Info-boksen animeres inn og ut uten at URL-en endres.
 // 📜 https://react.dev/reference/react/ViewTransition
+//
 // 💡 Refleksjon: Hva koordinerer routerens viewTransition, React <ViewTransition>
 // og useTransition? Ikke aktiver begge animasjonsintegrasjoner på samme endring.
-//
+
 // ✍️ Oppgave 5 (ekstra): Legg til søk i programmet med useDeferredValue.
 // Åpen ekstraoppgave uten ferdig fasit.
 // La input bruke søkeverdien direkte og en Suspense-basert liste bruke den utsatte verdien.
@@ -40,6 +43,7 @@ import { ErrorMessage } from "../shared/ui";
 // ✅ Ferdig når: Med 3 s skriver du uten venting; gamle treff vises dempet til nye er klare.
 // Listen må til slutt vise treff for den siste teksten, uten fallback-flimmer ved hvert tegn.
 // 📜 https://react.dev/reference/react/useDeferredValue
+
 export function Schedule() {
   const [params] = useSearchParams();
   const day = params.get("day") === "2" ? "2" : "1";
