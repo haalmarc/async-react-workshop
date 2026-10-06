@@ -10,11 +10,13 @@ import { ErrorMessage } from "../shared/ui";
 // Ta deg tid til å forstå konseptene og lese dokumentasjon.
 // Du får mer ut av fasiten om du har noe å sammenligne med.
 
-// ✍️ Oppgave 1: Bytt den manuelle pendingDay-livssyklusen med useTransition.
-// Returner/await hele den asynkrone handlingen inne i startTransition.
-// Behold pending-feedback og feilhåndtering. Sett dag i URL-en etter data er klar.
+// ✍️ Oppgave 1: Bruk useTransition for å holde rede på pending for skifte av dag.
+// Hint:
+// - For ventestatus (som disabled), bytt ut pendingDay med isPending fra useTransition.
 // ✅ Ferdig når: Ved 3 s og kald cache vises pending og gammelt program til nytt er klart.
 // 📜 https://react.dev/reference/react/useTransition
+//
+// 💡 Refleksjon: Hva er forskjellen på å wrappe hele changeDay-funksjonen i startTransition versus bare deler?
 
 // ✍️ Oppgave 2: Bruk useOptimistic(day) for å markere valgt dag umiddelbart.
 // Oppdater den bare inne i Action. Prøv kald cache og 3 s forsinkelse.
@@ -22,27 +24,38 @@ import { ErrorMessage } from "../shared/ui";
 //
 // 💡 Refleksjon: Hva oppdateres straks, og hva venter? Er en transition en animasjon?
 
-// ✍️ Oppgave 3: Sett viewTransition på SessionGrid under. Den sender verdien til Link.
-// Åpne en sesjon og gå tilbake. Dette er React Routers nettleser-integrasjon.
+// ✍️ Oppgave 3: Animer overgangen ved åpning av sesjon.
+// Hint:
+// - Bruk viewTransition på SessionGrid-komponenten.
 // ✅ Ferdig når: Navigasjon til sesjon og tilbake har en synlig overgang i støttet nettleser.
 // 📜 https://reactrouter.com/how-to/view-transitions
+//
+// 💡 Refleksjon:
+// - Hvordan skjer animasjonen, selv uten å definere noe CSS?
 
-// ✍️ Oppgave 4: Pakk den lokale info-boksen i Preview med React <ViewTransition>.
-// Legg setOpen i startTransition. Ingen navigasjon er nødvendig her.
-// Ferdig CSS tar hensyn til prefers-reduced-motion.
+// ✍️ Oppgave 4: Legg til overgang for "Praktisk info"-boksen ved bruk av Reacts ViewTransition.
+// Hint:
+// - Wrap ViewTransition rundt Preview-komponenten.
+// - Legg setOpen i startTransition.
 // ✅ Ferdig når: Info-boksen animeres inn og ut uten at URL-en endres.
 // 📜 https://react.dev/reference/react/ViewTransition
 //
-// 💡 Refleksjon: Hva koordinerer routerens viewTransition, React <ViewTransition>
-// og useTransition? Ikke aktiver begge animasjonsintegrasjoner på samme endring.
+// 💡 Refleksjon:
+// - Hva er forskjellen på å bruke Reacts ViewTransition versus routerens viewTransition? Hvilken bør du bruke?
+// - Hvorfor trenger du startTransition for å få til animasjonen?
+// - Hvordan kan du ta hensyn til prefers-reduced-motion når du bruker ViewTransition?
 
 // ✍️ Oppgave 5 (ekstra): Legg til søk i programmet med useDeferredValue.
 // Åpen ekstraoppgave uten ferdig fasit.
-// La input bruke søkeverdien direkte og en Suspense-basert liste bruke den utsatte verdien.
-// Hint: Utvid getSessions og API-et med søk; ta søket med i queryKey. Vis når verdiene er ulike.
+// Hint:
+// - Utvid getSessions og API-et med søk; ta søket med i queryKey. Vis når verdiene er ulike.
+// - La input bruke søkeverdien direkte og en Suspense-basert liste bruke den utsatte verdien.
 // ✅ Ferdig når: Med 3 s skriver du uten venting; gamle treff vises dempet til nye er klare.
 // Listen må til slutt vise treff for den siste teksten, uten fallback-flimmer ved hvert tegn.
 // 📜 https://react.dev/reference/react/useDeferredValue
+//
+// 💡 Refleksjon:
+// - Hva er forskjellen på å useTransition og useDeferredValue? Er det noen sammenheng?
 
 export function Schedule() {
   const [params] = useSearchParams();
